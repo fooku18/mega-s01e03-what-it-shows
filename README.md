@@ -37,8 +37,8 @@ Exported 2026-10-04 from the `support` repo, `apps/kb/` → `src/`.
 
 ## Added in this repo
 
-- `src/routes/kb/incidents/4471-split/+page.svx`: #4471 split into the two problems it holds,
-  one GitHub issue each. Counts come from `src/lib/kb/problems.ts` via `ProblemTable.svelte`.
+- `src/routes/kb/incidents/4471-split/+page.svx`: #4471 split into the three problems it holds,
+  one GitHub issue each. Counts come from the desk's own `CauseTable.svelte`.
 - `desk-view/kb-incidents-4471-split.html`: that page as rendered (`npm install && npm run build`,
   then `build/kb/incidents/4471-split.html`), with its CSS inlined.
 - `package.json`, `svelte.config.js`, `vite.config.js`, `src/app.html`, `src/routes/+layout.js`:
