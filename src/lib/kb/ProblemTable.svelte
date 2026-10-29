@@ -47,7 +47,14 @@
   </tbody>
 </table>
 
-<p class="note">Sum of the rows: {groups.reduce((n, g) => n + g.reports.length, 0)}.</p>
+{#each groups as g (g.problem)}
+  {#if g.alsoIn}
+    <p class="note">
+      The {g.alsoIn.reports} <code>{g.problem}</code> reports are also counted under <code>{g.alsoIn.problem}</code>:
+      the desk files them there by tenant and footnotes them.
+    </p>
+  {/if}
+{/each}
 
 <style>
   .sum { font-size: 1.1rem; }

@@ -39,7 +39,8 @@ The fix queued for #4471 fixes the shared parser only. The other two problems st
    first, so day and month flip.
 5. **`one-day`**: the reports the desk read as a one-day move (`desk-notes.json`). These dates are
    not flipped; they are one day off, or differ between two people for the same meeting. That
-   points at a time zone or midnight bug, not at date order.
+   points at a time zone or midnight bug, not at date order. The desk counts them under `parser`,
+   where their tenant files them, and so does the table above; they have their own ticket too.
 
 ## The intake tag is a guess
 
