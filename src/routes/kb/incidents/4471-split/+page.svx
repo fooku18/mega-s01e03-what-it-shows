@@ -1,6 +1,6 @@
 ---
 layout: runbook
-title: '#4471 · three problems, not one'
+title: '#4471 · two problems, not one'
 owner: Jakob Schlonsok
 status: open
 reviewed: 2026-10-29
@@ -17,15 +17,15 @@ signature: Jakob Schlonsok
 </script>
 
 [#4471](/kb/incidents/4471) was merged as one issue and marked known. Read report by report, it
-holds three problems. Each one now has its own ticket, with the number of reports it covers.
+holds two problems. Each one now has its own ticket, with the number of reports it covers.
 
 <Callout kind="warn">
-The fix queued for #4471 fixes the shared parser only. The other two problems stay after it ships.
+The fix queued for #4471 fixes the shared parser only. The booking-v3 problem stays after it ships.
 </Callout>
 
 ## The problems
 
-<ProblemTable ticket={4471} repo="fooku18/mega-s01e03-what-it-shows" issues={{ parser: 1, hint: 2, 'one-day': 3 }} />
+<ProblemTable ticket={4471} repo="fooku18/mega-s01e03-what-it-shows" issues={{ parser: 1, hint: 2 }} />
 
 ## How each report was placed
 
@@ -37,10 +37,10 @@ The fix queued for #4471 fixes the shared parser only. The other two problems st
    Fixing the shared parser does not touch this.
 4. **`parser`**: every other report from a day-first tenant. The shared parser reads the date month
    first, so day and month flip.
-5. **`one-day`**: the reports the desk read as a one-day move (`desk-notes.json`). These dates are
-   not flipped; they are one day off, or differ between two people for the same meeting. That
-   points at a time zone or midnight bug, not at date order. The desk counts them under `parser`,
-   where their tenant files them, and so does the table above; they have their own ticket too.
+5. **One-day moves** (`desk-notes.json`): these dates are not flipped; they are one day off, or
+   differ between two people for the same meeting. They stay under `parser`, where their tenant
+   files them, as a footnote. If they remain after the parser fix, give them a ticket of their own:
+   that points at a time zone or midnight bug, not at date order.
 
 ## The intake tag is a guess
 
@@ -54,7 +54,7 @@ The tag comes from the reporter's browser at intake. It is not the cause: sort b
 
 ## Lessons
 
-- Same symptom is not same cause. "Wrong date" came from three bugs; place reports by tenant and
+- Same symptom is not same cause. "Wrong date" came from two bugs; place reports by tenant and
   channel before you merge them.
 - Read a sample of bodies before you mark a big ticket known.
 

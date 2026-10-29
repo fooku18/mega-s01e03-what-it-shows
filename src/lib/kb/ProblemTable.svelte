@@ -20,7 +20,7 @@
 
 <p class="sum">
   <strong>{all.length}</strong> reports in #{ticket} ({rows} rows in the export, {rows - all.length} of them a
-  repeat of the same id) · <strong>{groups.length}</strong> problems
+  repeat of the same id) · <strong>{groups.length}</strong> {groups.length === 1 ? 'problem' : 'problems'}
 </p>
 
 <table>
@@ -30,7 +30,7 @@
   <tbody>
     {#each groups as g (g.problem)}
       <tr>
-        <td><code>{g.problem}</code><br />{g.problem in PROBLEM_TITLE ? PROBLEM_TITLE[g.problem as keyof typeof PROBLEM_TITLE] : ''}</td>
+        <td><code>{g.problem}</code><br />{g.problem === 'unplaced' ? '' : PROBLEM_TITLE[g.problem]}</td>
         <td>{g.reports.length}</td>
         <td class="tags">{channels(g.channels)}</td>
         <td>{g.tenants.length}</td>
@@ -48,10 +48,10 @@
 </table>
 
 {#each groups as g (g.problem)}
-  {#if g.alsoIn}
+  {#if g.oneDay}
     <p class="note">
-      The {g.alsoIn.reports} <code>{g.problem}</code> reports are also counted under <code>{g.alsoIn.problem}</code>:
-      the desk files them there by tenant and footnotes them.
+      {g.oneDay} of the <code>{g.problem}</code> reports read as a one-day move, not a flip; filed under
+      <code>{g.problem}</code> by tenant.
     </p>
   {/if}
 {/each}
