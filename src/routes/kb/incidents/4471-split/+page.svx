@@ -1,0 +1,60 @@
+---
+layout: runbook
+title: '#4471 · three problems, not one'
+owner: Jakob Schlonsok
+status: open
+reviewed: 2026-10-29
+signature: Jakob Schlonsok
+---
+
+<script>
+  import ProblemTable from '#lib/kb/ProblemTable.svelte';
+  import ReportList from '#lib/kb/ReportList.svelte';
+  import IntakeMismatch from '#lib/kb/IntakeMismatch.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+  import notes from '#lib/data/desk-notes.json';
+</script>
+
+[#4471](/kb/incidents/4471) was merged as one issue and marked known. Read report by report, it
+holds three problems. Each one now has its own ticket, with the number of reports it covers.
+
+<Callout kind="warn">
+The fix queued for #4471 fixes the shared parser only. The other two problems stay after it ships.
+</Callout>
+
+## The problems
+
+<ProblemTable ticket={4471} repo="fooku18/mega-s01e03-what-it-shows" issues={{ parser: 1, hint: 2, 'one-day': 3 }} />
+
+## How each report was placed
+
+1. **One id, one report.** The export pages overlap, so some reports come twice. Count each id once.
+2. **By tenant, not by browser.** The cause depends on the tenant's locale and booking form
+   (`causes.ts`). Every tenant on file writes the day first.
+3. **`hint`**: the report came in through the form of a tenant on `booking-v3`. That form prints
+   `MM/DD/YYYY` under its date field, people type month first, and the form reads the date day first.
+   Fixing the shared parser does not touch this.
+4. **`parser`**: every other report from a day-first tenant. The shared parser reads the date month
+   first, so day and month flip.
+5. **`one-day`**: the reports the desk read as a one-day move (`desk-notes.json`). These dates are
+   not flipped; they are one day off, or differ between two people for the same meeting. That
+   points at a time zone or midnight bug, not at date order.
+
+## The intake tag is a guess
+
+<IntakeMismatch ticket={4471} />
+
+The tag comes from the reporter's browser at intake. It is not the cause: sort by tenant and form.
+
+## The one-day reports
+
+<ReportList ids={notes.oneDayMove} />
+
+## Lessons
+
+- Same symptom is not same cause. "Wrong date" came from three bugs; place reports by tenant and
+  channel before you merge them.
+- Read a sample of bodies before you mark a big ticket known.
+
+<RenderStamp {signature} />
